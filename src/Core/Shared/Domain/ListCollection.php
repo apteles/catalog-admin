@@ -16,7 +16,7 @@ class ListCollection implements Collection
      * @param array<T> $items
      */
     public function __construct(
-        private array $items = []
+        private readonly array $items = []
     ) {
     }
 

@@ -13,6 +13,11 @@ services:
         depends_on:
             - db
             - redis
+        environment:
+            - OPCACHE_ENABLE=${OPCACHE_ENABLE:-1}
+            - XDEBUG_MODE=${XDEBUG_MODE:-debug}
+            - XDEBUG_CLIENT_HOST=${XDEBUG_CLIENT_HOST:-host.docker.internal}
+            - XDEBUG_CLIENT_PORT=${XDEBUG_CLIENT_PORT:-9003}
 
     nginx:
         build: .docker/nginx

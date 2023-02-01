@@ -1,27 +1,11 @@
 
-# Laravel 9.x - Quick Start (Laravel 9.x + Docker)
+# Gerenciador de catálogo de vídeo.
 
-## Rodar o Laravel
+## Configurando o Projeto
 
 Clone Repositório
 ```sh
-git clone https://github.com/codeedu/micro-admin-videos-php.git laravel9
-```
-
-```sh
-cd laravel9/
-```
-
-
-Alterne de branch
-```sh
-git checkout laravel-9-quick-start
-```
-
-
-Remova o versionamento
-```sh
-rm -rf .git/
+git clone https://github.com/apteles/catalog-admin.git
 ```
 
 
@@ -33,13 +17,13 @@ cp .env.example .env
 
 Atualize as variáveis de ambiente do arquivo .env
 ```dosini
-APP_NAME="Full Cycle"
+APP_NAME="ACME"
 APP_URL=http://localhost:8000
 
 DB_CONNECTION=mysql
 DB_HOST=db
 DB_PORT=3306
-DB_DATABASE=code_micro_videos
+DB_DATABASE=code_micro_videos   
 DB_USERNAME=root
 DB_PASSWORD=root
 

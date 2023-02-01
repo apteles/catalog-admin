@@ -1,5 +1,9 @@
 FROM php:8.1.1-fpm
 
+ENV XDEBUG_MODE = debug
+ENV XDEBUG_CLIENT_HOST = host.docker.internal
+ENV XDEBUG_CLIENT_PORT = 9003
+
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -10,6 +14,10 @@ RUN apt-get update && apt-get install -y \
     unzip
 
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
+
+RUN pecl install xdebug \
+#    && mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" \
+    && docker-php-ext-enable xdebug
 
 RUN usermod -u 1000 www-data
 
