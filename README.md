@@ -1,6 +1,8 @@
 
 # Gerenciador de catálogo de vídeo.
 
+![Diagrama-Catálogo-de-video](./docs/Diagrama-Catálogo-de-video.jpg)
+
 ## Configurando o Projeto
 
 Clone Repositório
