@@ -11,18 +11,17 @@ use Core\Domain\Repositories\CategoryRepository;
 use Core\Shared\Domain\Collection;
 use Core\Shared\Domain\ListCollection;
 use Core\Shared\Domain\PaginationInterface;
+use Exception;
 
+/**
+ * @template-implements CategoryRepository<Category>
+ */
 class CategoryEloquentRepository implements CategoryRepository
 {
     public function __construct(private CategoryModel $model)
     {
     }
 
-    /**
-     * @param Category $entity
-     * @return Category
-     * @throws \Exception
-     */
     public function create(mixed $entity): Category
     {
         $category = $this->model->create([
@@ -60,12 +59,10 @@ class CategoryEloquentRepository implements CategoryRepository
 
     /**
      * @inheritDoc
+     * @throws NotFoundException
      */
     public function update(mixed $entity)
     {
-        /**
-         * @var \App\Models\Category $categoryFromDatabase
-         */
         if(!$categoryFromDatabase = $this->model->find($entity->id())) {
             throw new NotFoundException('Category not found');
         }
@@ -81,9 +78,8 @@ class CategoryEloquentRepository implements CategoryRepository
 
     /**
      * @param string $id
-     * @return Category|mixed
+     * @return Category
      * @throws NotFoundException
-     * @throws \Exception
      */
     public function findById(string $id): Category
     {
@@ -104,7 +100,7 @@ class CategoryEloquentRepository implements CategoryRepository
     /**
      * @param object $model
      * @return Category
-     * @throws \Exception
+     * @throws Exception
      */
     public function toEntity(object $model): Category
     {

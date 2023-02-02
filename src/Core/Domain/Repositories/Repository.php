@@ -58,8 +58,8 @@ interface Repository
     public function delete(string $id): bool;
 
     /**
-     * @param object $data
+     * @param object $model
      * @return T
      */
-    public function toEntity(object $data);
+    public function toEntity(object $model);
 }

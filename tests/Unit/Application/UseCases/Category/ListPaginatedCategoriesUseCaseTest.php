@@ -31,7 +31,6 @@ class ListPaginatedCategoriesUseCaseTest extends TestCase
 
     public function testItShouldListCategoriesPaginatedWithMoreThanZeroItems(): void
     {
-
         /** @var CategoryRepository $repositoryWithTwoItems */
         $repositoryWithTwoItems = $this->givenARepositoryWith(
             items: 2
@@ -42,11 +41,12 @@ class ListPaginatedCategoriesUseCaseTest extends TestCase
         $this->thenAssertInstanceOfCategoryCollectionWithTwoItems($output->items);
     }
 
-    private function givenARepositoryWith(int $items): m\LegacyMockInterface|m\MockInterface
+    private function givenARepositoryWith(int $items): CategoryRepository
     {
         $categoryCollectionMock = $this->getMockFor(CategoryCollection::class, 'count', $items);
         $paginateMock = m::mock(stdClass::class, PaginationInterface::class);
         $paginateMock->shouldReceive('items')->andReturn($categoryCollectionMock);
+        $paginateMock->shouldReceive('total');
 
         $repositoryMock = m::mock(stdClass::class, CategoryRepository::class);
         $repositoryMock->shouldReceive('paginate')->andReturn($paginateMock);
