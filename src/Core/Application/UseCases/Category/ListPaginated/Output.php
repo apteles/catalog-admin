@@ -17,13 +17,13 @@ class Output
      */
     public function __construct(
         public readonly Collection $items,
-        public int $total,
-        public int $current_page,
-        public int $last_page,
-        public int $first_page,
-        public int $per_page,
-        public int $to,
-        public int $from,
+        public readonly ?int $total,
+//        public readonly ?int $current_page,
+//        public readonly ?int $last_page,
+//        public readonly ?int $first_page,
+//        public readonly ?int $per_page,
+//        public readonly ?int $to,
+//        public readonly ?int $from,
     ) {
     }
 }

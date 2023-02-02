@@ -44,7 +44,7 @@ class UpdateCategoryUseCaseTest extends TestCase
 
     public function testItShouldNotUpdatedCategoryIfDoesNotExists(): void
     {
-        $this->markTestSkipped();
+        $this->markTestSkipped('TODO: Implement');
     }
 }
 

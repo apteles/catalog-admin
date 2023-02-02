@@ -14,7 +14,6 @@ class CategoryTest extends TestCase
 
     public function testItShouldListAllCategories(): void
     {
-        $this->markTestSkipped();
         Category::factory()->count(30)->create();
 
         $response = $this->getJson(self::ENDPOINT);

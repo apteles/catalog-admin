@@ -23,6 +23,6 @@ class CategoryController extends Controller
             )
         );
 
-        return CategoryResource::collection($output);
+        return CategoryResource::collection(collect($output->items));
     }
 }
