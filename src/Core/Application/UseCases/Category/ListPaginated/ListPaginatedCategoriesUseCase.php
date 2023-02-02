@@ -27,12 +27,12 @@ class ListPaginatedCategoriesUseCase
         return new Output(
             items: $categoriesFromStorage->items(),
             total: $categoriesFromStorage->total(),
-//            current_page: $categoriesFromStorage->currentPage(),
-//            last_page: $categoriesFromStorage->lastPage(),
-//            first_page: $categoriesFromStorage->firstPage(),
-//            per_page: $categoriesFromStorage->perPage(),
-//            to: $categoriesFromStorage->to(),
-//            from: $categoriesFromStorage->from(),
+            current_page: $categoriesFromStorage->currentPage(),
+            last_page: $categoriesFromStorage->lastPage(),
+            first_page: $categoriesFromStorage->firstPage(),
+            per_page: $categoriesFromStorage->perPage(),
+            to: $categoriesFromStorage->to(),
+            from: $categoriesFromStorage->from(),
         );
     }
 }
