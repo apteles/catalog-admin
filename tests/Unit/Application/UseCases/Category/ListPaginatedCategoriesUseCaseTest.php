@@ -47,6 +47,12 @@ class ListPaginatedCategoriesUseCaseTest extends TestCase
         $paginateMock = m::mock(stdClass::class, PaginationInterface::class);
         $paginateMock->shouldReceive('items')->andReturn($categoryCollectionMock);
         $paginateMock->shouldReceive('total');
+        $paginateMock->shouldReceive('currentPage');
+        $paginateMock->shouldReceive('lastPage');
+        $paginateMock->shouldReceive('firstPage');
+        $paginateMock->shouldReceive('perPage');
+        $paginateMock->shouldReceive('to');
+        $paginateMock->shouldReceive('from');
 
         $repositoryMock = m::mock(stdClass::class, CategoryRepository::class);
         $repositoryMock->shouldReceive('paginate')->andReturn($paginateMock);
