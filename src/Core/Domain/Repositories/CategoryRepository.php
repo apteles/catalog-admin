@@ -6,9 +6,6 @@ namespace Core\Domain\Repositories;
 
 use Core\Domain\Entities\Category;
 
-/**
- * @template-extends Repository<Category>
- */
 interface CategoryRepository extends Repository
 {
 }

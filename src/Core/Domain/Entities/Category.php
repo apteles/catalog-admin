@@ -10,7 +10,7 @@ use DateTime;
 use DateTimeInterface;
 use Exception;
 
-class Category
+final class Category
 {
     /**
      * @throws Exception

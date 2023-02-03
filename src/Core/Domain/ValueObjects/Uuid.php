@@ -6,7 +6,7 @@ namespace Core\Domain\ValueObjects;
 
 use Ramsey\Uuid\Uuid as RamseyUuid;
 
-class Uuid
+final class Uuid
 {
     private function __construct(
         private string $value
