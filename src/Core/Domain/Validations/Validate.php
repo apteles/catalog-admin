@@ -3,10 +3,14 @@ declare(strict_types=1);
 
 namespace Core\Domain\Validations;
 
-class Validate
+final class Validate
 {
     /**
      * @var array<string, class-string>
+     */
+
+    /**
+     * @phpstan-ignore-next-line
      */
     private static array $validators = [
         'string' => Str::class
@@ -25,6 +29,7 @@ class Validate
 //        }
 
     }
+
 
 
 }
