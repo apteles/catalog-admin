@@ -6,7 +6,7 @@ services:
         build: .
         container_name: "${PROJECT_NAME}_app"
         volumes:
-            - .:/var/www
+            - .:/var/www/catalog
             - ./.docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
         networks:
             - catalog
@@ -20,18 +20,26 @@ services:
             - XDEBUG_CLIENT_PORT=${XDEBUG_CLIENT_PORT:-9003}
 
     nginx:
-        build: .docker/nginx
+        image: nginx:1.15.0-alpine
         container_name: "${PROJECT_NAME}_nginx"
+        working_dir: /var/www
         restart: always
         tty: true
         ports:
-            - "8000:80"
+            - "9008:9008"
+            - "443:443"
         volumes:
-            - .:/var/www
+            - .:/var/www/catalog:cached
+            - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+#            - ./.docker/nginx/ssl:/etc/nginx/ssl
         networks:
             - catalog
         depends_on:
             - app
+        labels:
+            - 'traefik.http.routers.${PROJECT_NAME}_nginx.rule=HostRegexp(`${PROJECT_DOMAIN}`, `{subdomain:[a-z]+.${PROJECT_DOMAIN}}`)'
+            - 'traefik.http.routers.${PROJECT_NAME}_nginx.priority=1'
+            - 'traefik.docker.network=proxy'
 
     db:
         build: ./.docker/mysql
@@ -52,6 +60,22 @@ services:
     redis:
         image: redis:alpine
         container_name: "${PROJECT_NAME}_redis"
+        networks:
+            - catalog
+    traefik:
+        image: traefik:v2.0
+        container_name: "${PROJECT_NAME}_traefik"
+        restart: always
+        command:
+            - --entrypoints.web.address=:80
+            - --providers.docker=true
+            - --api.insecure=true
+            - --log.level=debug
+        volumes:
+            - '/var/run/docker.sock:/var/run/docker.sock'
+        ports:
+            - '80:80'
+            - '8080:8080'
         networks:
             - catalog
 
