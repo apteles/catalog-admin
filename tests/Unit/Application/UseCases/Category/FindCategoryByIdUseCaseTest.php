@@ -21,22 +21,21 @@ class FindCategoryByIdUseCaseTest extends TestCase
         $name = 'category name';
         $description = 'some description';
         $id = (string) Uuid::generate();
-        $categoryEntityMock = m::mock(Category::class, [
+        $categoryStub = new Category(
             $name,
             $description,
-            $id
-        ])->makePartial();
-        $categoryEntityMock->shouldReceive('id')->andReturn($id);
+            $id,
+        );
 
         $categoryRepositoryMock = m::mock(stdClass::class, CategoryRepository::class);
-        $categoryRepositoryMock->shouldReceive('findById')->with($id)->andReturn($categoryEntityMock);
+        $categoryRepositoryMock->shouldReceive('findById')->andReturn($categoryStub);
 
-        $inputMock = m::mock(Input::class, [
-           $id
-        ]);
+        $inputStub = new Input(
+            id:  $id
+        );
 
         $listCategoryByIdUseCase = new FindCategoryByIdUseCase($categoryRepositoryMock);
-        $output = $listCategoryByIdUseCase->execute($inputMock);
+        $output = $listCategoryByIdUseCase->execute($inputStub);
 
         $this->assertEquals($name, $output->name);
         $this->assertEquals($description, $output->description);
@@ -44,9 +43,9 @@ class FindCategoryByIdUseCaseTest extends TestCase
         $this->assertTrue(RamseyUuid::isValid((string)$output->id));
 
         $categoryRepositorySpy = m::spy(stdClass::class, CategoryRepository::class);
-        $categoryRepositorySpy->shouldReceive('findById')->with($id)->andReturn($categoryEntityMock);
+        $categoryRepositorySpy->shouldReceive('findById')->andReturn($categoryStub);
         $listCategoryByIdUseCase = new FindCategoryByIdUseCase($categoryRepositorySpy);
-        $listCategoryByIdUseCase->execute($inputMock);
+        $listCategoryByIdUseCase->execute($inputStub);
         $categoryRepositorySpy->shouldHaveReceived('findById');
 
         m::close();

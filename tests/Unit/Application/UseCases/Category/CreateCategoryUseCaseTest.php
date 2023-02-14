@@ -24,21 +24,24 @@ class CreateCategoryUseCaseTest extends TestCase
         $name = 'category name';
         $description = 'some description';
         $id = (string) Uuid::generate();
-        $categoryEntity = m::mock(Category::class, [
-            $name,
-            $description,
-            $id
-        ])->makePartial();
-        $categoryEntity->shouldReceive('id')->andReturn($id);
+        $categoryStub = new Category(
+            name: $name,
+            description: $description,
+            id: $id,
+        );
 
         $categoryRepositoryMock = m::mock(stdClass::class, CategoryRepository::class);
-        $categoryRepositoryMock->shouldReceive('create')->andReturn($categoryEntity);
+        $categoryRepositoryMock->shouldReceive('create')->andReturn($categoryStub);
         $createCategoryUseCase = new CreateCategoryUseCase($categoryRepositoryMock);
         $inputMock = m::mock(Input::class, [
             'category name',
             'some description'
         ]);
-        $output = $createCategoryUseCase->execute($inputMock);
+        $inputStub = new Input(
+            name: $name,
+            description: $description,
+        );
+        $output = $createCategoryUseCase->execute($inputStub);
 
         $this->assertInstanceOf(Output::class, $output);
         $this->assertEquals('some description', $output->description);
@@ -48,9 +51,9 @@ class CreateCategoryUseCaseTest extends TestCase
         $this->assertTrue(RamseyUuid::isValid((string)$output->id));
 
         $categoryRepositorySpy = m::spy(stdClass::class, CategoryRepository::class);
-        $categoryRepositorySpy->shouldReceive('create')->andReturn($categoryEntity);
+        $categoryRepositorySpy->shouldReceive('create')->andReturn($categoryStub);
         $createCategoryUseCase = new CreateCategoryUseCase($categoryRepositorySpy);
-        $createCategoryUseCase->execute($inputMock);
+        $createCategoryUseCase->execute($inputStub);
         $categoryRepositorySpy->shouldHaveReceived('create');
         m::close();
     }
