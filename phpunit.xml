@@ -12,12 +12,13 @@
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
-    <coverage processUncoveredFiles="true">
+    <coverage processUncoveredFiles="true" cacheDirectory="build/phpunit/cache">
         <include>
             <directory suffix=".php">./src</directory>
         </include>
         <report>
             <text outputFile="php://stdout"/>
+            <html outputDirectory="build/coverage"/>
         </report>
     </coverage>
     <php>
