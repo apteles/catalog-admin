@@ -16,7 +16,7 @@ use stdClass;
 
 class DeleteCategoryUseCaseTest extends TestCase
 {
-    public function testItShouldBeAbleUpdateCategory(): void
+    public function testItShouldBeAbleDeleteCategory(): void
     {
         $aCategory = Category::new(
             name: 'some name',
@@ -29,11 +29,10 @@ class DeleteCategoryUseCaseTest extends TestCase
         );
         $this->thenAssertThatWasExcluded($output);
         $categoryRepositoryMock = $this->andGiveARepositoryThatNotFound($aCategory);
-        $output = $this->whenExecutedWith(
+        $this->whenExecutedWithThenAssertThatWasNoDeleted(
             $categoryRepositoryMock,
             (string) $aCategory->id()
         );
-        $this->thenAssertThatWasNoDeleted($output);
     }
 
     private function giveARepositoryWith(Category $category): CategoryRepository
@@ -53,6 +52,8 @@ class DeleteCategoryUseCaseTest extends TestCase
      */
     private function whenExecutedWith(CategoryRepository $categoryRepositoryMock, string $id): Output
     {
+        $this->expectException(NotFoundException::class);
+
         $useCase = new DeleteCategoryUseCase($categoryRepositoryMock);
         return $useCase->execute(new Input(
             id: $id,
@@ -73,17 +74,24 @@ class DeleteCategoryUseCaseTest extends TestCase
     private function andGiveARepositoryThatNotFound(Category $category): CategoryRepository
     {
         $categoryRepositoryMock = m::mock(stdClass::class, CategoryRepository::class);
-        $categoryRepositoryMock->shouldReceive('findById')->with((string)$category->id())->andReturn($category);
-        $categoryRepositoryMock->shouldReceive('delete')->andThrow(NotFoundException::class);
+        $categoryRepositoryMock->shouldReceive('findById')->andThrow(NotFoundException::class);
 
         return $categoryRepositoryMock;
     }
 
-    private function thenAssertThatWasNoDeleted(Output $output): void
+    /**
+     * @param CategoryRepository $categoryRepositoryMock
+     * @param Category $aCategory
+     * @return Output
+     */
+    private function whenExecutedWithThenAssertThatWasNoDeleted(CategoryRepository $categoryRepositoryMock, string $id): Output
     {
-        $this->assertFalse(
-            $output->executed,
-        );
+        $this->expectException(NotFoundException::class);
+
+        $useCase = new DeleteCategoryUseCase($categoryRepositoryMock);
+        return $useCase->execute(new Input(
+            id: $id,
+        ));
     }
 }
 

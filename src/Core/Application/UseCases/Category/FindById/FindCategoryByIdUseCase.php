@@ -19,7 +19,7 @@ class FindCategoryByIdUseCase
         $categoryFromStorage = $this->categoryRepository->findById((string)$input->id);
 
         return new Output(
-            id: $categoryFromStorage->id(),
+            id: (string) $categoryFromStorage->id(),
             name: $categoryFromStorage->name(),
             description: $categoryFromStorage->description(),
             status: $categoryFromStorage->status(),

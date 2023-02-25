@@ -24,7 +24,7 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'is_active' => $this->status,
+            'is_active' => (bool) $this->status,
             'created_at' => Carbon::make($this->created_at)->format('Y-m-d H:i:s')
         ];
     }
@@ -32,9 +32,7 @@ class CategoryResource extends JsonResource
     public function with($request)
     {
         return [
-            'meta' => [
-                'foo' => 'bar'
-            ]
+
         ];
     }
 

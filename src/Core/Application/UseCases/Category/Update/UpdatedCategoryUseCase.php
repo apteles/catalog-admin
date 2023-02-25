@@ -17,14 +17,16 @@ class UpdatedCategoryUseCase
         $categoryFromStorage = $this->categoryRepository->findById(
             $input->id
         );
-
         $categoryFromStorage->changeName($input->name);
-        $categoryFromStorage->changeDescription($input->description);
+        $categoryFromStorage->changeDescription( $input?->description ?? $categoryFromStorage->description());
         $categoryFromStorage = $this->categoryRepository->update($categoryFromStorage);
 
         return new Output(
-            $categoryFromStorage->name(),
-            $categoryFromStorage->description()
+            id: (string) $categoryFromStorage->id(),
+            name: $categoryFromStorage->name(),
+            description: $categoryFromStorage->description(),
+            status: $categoryFromStorage->status(),
+            created_at: $categoryFromStorage->createdAt()
         );
     }
 }
