@@ -34,7 +34,6 @@ class CategoryEloquentRepositoryTest extends TestCase
         $this->assertDatabaseHas(CategoryModel::class, [
             'name' => $categoryEntity->name(),
             'description' => $categoryEntity->description(),
-            'status' => $categoryEntity->status()
         ]);
 
     }

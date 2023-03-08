@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use Core\Domain\Exceptions\NotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use InvalidArgumentException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -38,4 +41,31 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof NotFoundException) {
+            return $this->renderError(
+                $exception->getMessage(),
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        if ($exception instanceof InvalidArgumentException) {
+            return $this->renderError(
+                $exception->getMessage(),
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        return parent::render($request, $exception);
+    }
+
+    private function renderError(string $message, int $statusCode)
+    {
+        return response()->json([
+            'message' => $message
+        ], $statusCode);
+    }
+
 }

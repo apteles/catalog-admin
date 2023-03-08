@@ -10,6 +10,9 @@ up:
 	@docker-compose up -d
 down:
 	@docker-compose down
+test-cover:
+	docker exec -e XDEBUG_MODE=coverage catalog_app vendor/bin/phpunit --coverage-html .reports/
+
 test:
 	@docker exec $(PROJECT_NAME)_app php artisan test
 migrate:

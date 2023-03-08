@@ -84,17 +84,24 @@ class CategoryEloquentRepository implements CategoryRepository
     public function findById(string $id): Category
     {
        if(!$category = $this->model->find($id)) {
-           throw new NotFoundException();
+           throw new NotFoundException(
+               sprintf("given %s does not exists", $id)
+           );
        }
        return $this->toEntity($category);
     }
 
     /**
      * @inheritDoc
+     * @throws NotFoundException
      */
     public function delete(string $id): bool
     {
-        return true;
+        if (! $categoryDb = $this->model->find($id)) {
+            throw new NotFoundException('Category Not Found');
+        }
+
+        return $categoryDb->delete();
     }
 
     /**
@@ -104,9 +111,14 @@ class CategoryEloquentRepository implements CategoryRepository
      */
     public function toEntity(object $model): Category
     {
-        return Category::new(
+        $entity = Category::newWithID(
+            $model->id,
             $model->name,
             $model->description
         );
+
+         $model->is_active ? $entity->activate() : $entity->deactivate();
+
+        return $entity;
     }
 }
