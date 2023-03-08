@@ -6,7 +6,7 @@ namespace Core\Domain\Exceptions;
 
 use InvalidArgumentException;
 
-class CategoryException extends InvalidArgumentException
+class EntityValidationException extends InvalidArgumentException
 {
     public function __construct(string $message)
     {

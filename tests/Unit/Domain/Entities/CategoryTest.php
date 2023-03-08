@@ -6,7 +6,7 @@ namespace Tests\Unit\Domain\Entities;
 
 use Core\Domain\Entities\Category;
 use Core\Domain\Entities\CategoryStatus;
-use Core\Domain\Exceptions\CategoryException;
+use Core\Domain\Exceptions\EntityValidationException;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
@@ -15,7 +15,7 @@ class CategoryTest extends TestCase
 
     public function testItShouldBeAbleValidNameWhenCreatingACategory(): void
     {
-        $this->expectException(CategoryException::class);
+        $this->expectException(EntityValidationException::class);
         $this->expectExceptionMessage('Empty name is not allowed.');
 
         Category::new(
@@ -26,7 +26,7 @@ class CategoryTest extends TestCase
 
     public function testItShouldBeAbleValidDescriptionWhenCreatingACategory(): void
     {
-        $this->expectException(CategoryException::class);
+        $this->expectException(EntityValidationException::class);
         $this->expectExceptionMessage('Name must have at least more than 2 characters.');
         Category::new(
             name: 'C',

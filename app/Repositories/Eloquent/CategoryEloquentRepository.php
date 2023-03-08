@@ -14,7 +14,7 @@ use Core\Shared\Domain\PaginationInterface;
 use Exception;
 
 /**
- * @template-implements CategoryRepository<Category>
+ * @implements CategoryRepository<Category>
  */
 class CategoryEloquentRepository implements CategoryRepository
 {
@@ -116,9 +116,15 @@ class CategoryEloquentRepository implements CategoryRepository
             $model->name,
             $model->description
         );
-
-         $model->is_active ? $entity->activate() : $entity->deactivate();
-
+        $model->status ? $entity->activate() : $entity->deactivate();
         return $entity;
+    }
+
+    public function getIdsListIds(array $categoriesId = []): array
+    {
+        return $this->model
+            ->whereIn('id', $categoriesId)
+            ->pluck('id')
+            ->toArray();
     }
 }

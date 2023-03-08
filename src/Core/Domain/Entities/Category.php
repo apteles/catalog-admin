@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Domain\Entities;
 
-use Core\Domain\Validations\CategoryValidation;
+use Core\Domain\Validations\DomainValidation;
 use Core\Domain\ValueObjects\Uuid;
 use DateTime;
 use DateTimeInterface;
@@ -124,31 +124,31 @@ final class Category
 
     private function validate(): void
     {
-        CategoryValidation::isEmpty(
+        DomainValidation::isEmpty(
             value: $this->name,
             exceptionMessage: 'Empty name is not allowed.'
         );
-        CategoryValidation::min(
+        DomainValidation::min(
             value: $this->name,
             minLength: 2,
             exceptionMessage:'Name must have at least more than 2 characters.'
         );
-        CategoryValidation::max(
+        DomainValidation::max(
             $this->name,
             maxLength: 255,
             exceptionMessage: 'Name should have less than 255 characters.'
         );
 
-        CategoryValidation::isEmpty(
+        DomainValidation::isEmpty(
             value: $this->description,
             exceptionMessage: 'Empty description is not allowed.'
         );
-        CategoryValidation::min(
+        DomainValidation::min(
             value: $this->description,
             minLength: 2,
             exceptionMessage:'Description must have at least more than 2 characters.'
         );
-        CategoryValidation::max(
+        DomainValidation::max(
             $this->description,
             maxLength: 255,
             exceptionMessage: 'Description should have less than 255 characters.'
