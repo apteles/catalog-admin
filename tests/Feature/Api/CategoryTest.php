@@ -70,6 +70,11 @@ class CategoryTest extends TestCase
             expected: $category->id,
             actual: $response['data']['id']
         );
+
+        $this->assertDatabaseHas('categories', [
+            'id' => (string) $category->id,
+            'status' => $category->status,
+        ]);
         $this->assertEquals(
             expected: $category->status,
             actual: $response['data']['is_active']
