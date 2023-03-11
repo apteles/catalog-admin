@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Core\Shared\Domain\Notification;
 
-class NotificationException
-{
+use Exception;
 
+class NotificationException extends Exception
+{
 }

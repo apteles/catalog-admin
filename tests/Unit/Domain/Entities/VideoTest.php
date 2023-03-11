@@ -7,10 +7,10 @@ namespace Tests\Unit\Domain\Entities;
 use Core\Domain\Entities\MediaStatus;
 use Core\Domain\Entities\Rating;
 use Core\Domain\Entities\Video;
-use Core\Domain\Exceptions\EntityValidationException;
 use Core\Domain\ValueObjects\Image;
 use Core\Domain\ValueObjects\Media;
 use Core\Domain\ValueObjects\Uuid;
+use Core\Shared\Domain\Notification\NotificationException;
 use DateTime;
 use Tests\TestCase;
 
@@ -302,7 +302,7 @@ class VideoTest extends TestCase
 
     public function testException()
     {
-        $this->expectException(EntityValidationException::class);
+        $this->expectException(NotificationException::class);
 
         new Video(
             title: '',

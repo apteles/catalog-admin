@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Core\Domain\Entities;
 
 
-use Core\Domain\Entities\Traits\MethodsMagicsTrait;
+use Core\Domain\Exceptions\EntityValidationException;
+use Core\Domain\Factories\Validations\Video as VideoValidatorFactory;
 use Core\Domain\Validations\DomainValidation;
 use Core\Domain\ValueObjects\Image;
 use Core\Domain\ValueObjects\Media;
 use Core\Domain\ValueObjects\Uuid;
+use Core\Shared\Domain\Notification\NotificationException;
 use DateTime;
+use Tests\Unit\Infra\Validations\VideoLaravel;
 
-final class Video
+final class Video extends Entity
 {
-    use MethodsMagicsTrait;
-
     protected array $categoriesId = [];
 
     protected array $genresId = [];
@@ -38,7 +39,7 @@ final class Video
         protected ?Media $trailerFile = null,
         protected ?Media $videoFile = null,
     ) {
-
+        parent::__construct();
         $this->id = $this->id ?? Uuid::generate();
         $this->createdAt = $this->createdAt ?? new DateTime();
 
@@ -135,15 +136,13 @@ final class Video
 
     protected function validation()
     {
-        DomainValidation::isEmpty(
-            value: $this->title,
-            exceptionMessage: 'Empty title is not allowed.'
-        );
+        VideoValidatorFactory::create()->validate($this);
 
-        DomainValidation::isEmpty(
-            value: $this->description,
-            exceptionMessage: 'Empty title is not allowed.'
-        );
+        if ($this->notification->hasErrors()) {
+            throw new NotificationException(
+                $this->notification->messages('video')
+            );
+        }
     }
 
 }
