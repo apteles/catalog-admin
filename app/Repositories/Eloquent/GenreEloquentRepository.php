@@ -5,7 +5,6 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Genre as GenreModel;
 use App\Repositories\Presenters\PaginationPresenter;
-use Core\Domain\Entities\Category;
 use Core\Domain\Entities\Genre;
 use Core\Domain\Exceptions\NotFoundException;
 use Core\Domain\Repositories\GenreRepository;
@@ -13,8 +12,8 @@ use Core\Domain\ValueObjects\Uuid;
 use Core\Shared\Domain\Collection;
 use Core\Shared\Domain\ListCollection;
 use Core\Shared\Domain\PaginationInterface;
-use DateTime;
 use Exception;
+
 
 /**
  * @template-implements GenreRepository<Genre>
