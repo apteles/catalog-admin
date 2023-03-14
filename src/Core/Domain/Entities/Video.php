@@ -129,7 +129,7 @@ final class Video extends Entity
         return $this->videoFile;
     }
 
-    public function setVideoFile(Media $videoFile): void
+    public function changeVideoFile(Media $videoFile): void
     {
         $this->videoFile = $videoFile;
     }

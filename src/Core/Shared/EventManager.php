@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Core\Shared;
 
-class EventManager
+interface EventManager
 {
-
+    public function dispatch( object $event): void;
 }

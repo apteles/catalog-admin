@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Core\Domain\Repositories;
 
-use Core\Domain\Entities\Category;
+use Core\Domain\Entities\Video;
 
 /**
- * @extends Repository<Category>
+ * @extends Repository<Video>
  */
 interface VideoRepository extends Repository
 {
-    public function getIdsListIds(array $categoriesId = []): array;
+    public function updateMedia(Video $video): void;
 }

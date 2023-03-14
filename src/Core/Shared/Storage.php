@@ -5,5 +5,7 @@ namespace Core\Shared;
 
 interface Storage
 {
+    public function store(string $path, array $file): string;
 
+    public function delete(string $path): void;
 }

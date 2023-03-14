@@ -124,6 +124,14 @@ class GenreEloquentRepository implements GenreRepository
         return $genreDb->delete();
     }
 
+    public function getIdsListIds(array $genresIds = []): array
+    {
+        return $this->model
+            ->whereIn('id', $genresIds)
+            ->pluck('id')
+            ->toArray();
+    }
+
     /**
      * @param object $model
      * @return Genre

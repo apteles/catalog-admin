@@ -11,4 +11,5 @@ use Core\Domain\Entities\Genre;
  */
 interface GenreRepository extends Repository
 {
+    public function getIdsListIds(array $genresIds = []): array;
 }
